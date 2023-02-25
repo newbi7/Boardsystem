@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+          PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="myCommentBoard">
+
+	<select id="allcommentboards" parameterType="Integer"
+		resultType="commentboard">		
+		<![CDATA[
+			SELECT boardNum, commentBoardNumber, commentBoardTitle, commentBoardContent, commentBoardAuthor,
+			       commentBoardDate, commentBoardLike
+			FROM commentboards
+			WHERE boardNum = #{boardNum}
+		]]>
+	</select>
+
+	<select id="editcommentboard" parameterType="Integer"
+		resultType="commentboard">		
+		<![CDATA[
+			SELECT boardNum, commentBoardNumber, commentBoardTitle, commentBoardContent, commentBoardAuthor,
+			       commentBoardDate, commentBoardLike
+			FROM commentboards
+			WHERE commentBoardNumber = #{commentBoardNumber}
+		]]>
+	</select>
+
+	<update id="updatecommentboard">
+		<![CDATA[
+			UPDATE commentboards
+			SET commentBoardTitle = #{commentBoardTitle}, commentBoardContent = #{commentBoardContent},
+			commentBoardAuthor = #{commentBoardAuthor}
+			WHERE commentBoardNumber = #{commentBoardNumber}
+		]]>
+	</update>
+
+	<delete id="deletecommentboard" parameterType="Integer">
+		<![CDATA[
+			DELETE 
+			FROM commentboards
+			WHERE commentBoardNumber = #{commentBoardNumber}
+		]]>
+	</delete>
+	
+	<insert id="addcommentboard" parameterType="commentBoard">
+		<![CDATA[
+			INSERT INTO commentboards(boardNum, commentBoardTitle, commentBoardContent, commentBoardAuthor, commentBoardLike) 
+			VALUES(#{boardNum}, #{commentBoardTitle}, #{commentBoardContent}, #{commentBoardAuthor}, 0);
+		]]>
+	</insert>
+
+</mapper>
